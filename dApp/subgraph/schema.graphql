@@ -1,0 +1,23 @@
+type Plan @entity(immutable: true) {
+  id: ID! # Plan Address
+  creator: Bytes! # Address of the creator
+  beneficiary: Bytes! # Address of the beneficiary
+  token: Bytes! # Address of the ERC20 token
+  price: BigInt! # Subscription price in token's smallest unit
+  duration: BigInt! # Duration in seconds
+  txHash: Bytes! # Transaction hash of creation
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  subscriptions: [Subscription!]! @derivedFrom(field: "plan")
+  subscriberCount: BigInt!
+}
+
+type Subscription @entity(immutable: false) {
+  id: ID! # userAddress-planAddress
+  user: Bytes! # Address of the subscriber
+  plan: Plan! # The plan they are subscribed to
+  expiry: BigInt!
+  active: Boolean!
+  createdAt: BigInt!
+  txHash: Bytes!
+}

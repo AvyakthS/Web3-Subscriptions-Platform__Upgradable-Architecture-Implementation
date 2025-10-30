@@ -1,0 +1,17 @@
+{
+  "name": "web3-subscriptions-dapp-subgraph",
+  "version": "1.0.0",
+  "description": "Subgraph for indexing the Web3 Subscriptions Platform smart contracts.",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "npm run codegen && graph build",
+    "create-local": "graph create --node http://localhost:8020/ web-3-subscriptions-platform-d-app",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 web-3-subscriptions-platform-d-app",
+    "build-and-deploy-local": "npm run build && npm run create-local && npm run deploy-local"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.97.1",
+    "@graphprotocol/graph-ts": "0.38.1"
+  }
+}
+

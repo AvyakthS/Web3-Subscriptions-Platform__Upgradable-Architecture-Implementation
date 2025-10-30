@@ -1,0 +1,51 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+graft:
+  base: QmcfyT8s6mKGC6QGpgsTr2B2x1UhJm2y3sNA2yw1s2i2a6
+  block: 26928470
+dataSources:
+  - kind: ethereum
+    name: SubscriptionManagerV1
+    network: amoy
+    source:
+      address: "0x0C60513045C7e6A1716FE8B475a986486D4D9907"
+      abi: SubscriptionManagerV1
+      startBlock: 26928470
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Plan
+      abis:
+        - name: SubscriptionManagerV1
+          file: SubscriptionManagerV1/SubscriptionManagerV1.json
+        - name: SubscriptionPlan
+          file: SubscriptionManagerV1/SubscriptionPlan.json
+      eventHandlers:
+        - event: PlanCreated(indexed address,indexed address,address,uint256,uint256)
+          handler: handlePlanCreated
+      file: SubscriptionManagerV1/SubscriptionManagerV1.wasm
+templates:
+  - kind: ethereum
+    name: SubscriptionPlan
+    network: amoy
+    source:
+      abi: SubscriptionPlan
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Subscription
+        - Plan
+      abis:
+        - name: SubscriptionPlan
+          file: SubscriptionPlan/SubscriptionPlan.json
+      eventHandlers:
+        - event: Subscribed(indexed address,uint256)
+          handler: handleSubscribed
+        - event: SubscriptionPaused(indexed address)
+          handler: handleSubscriptionPaused
+      file: templates/SubscriptionPlan/SubscriptionPlan.wasm
